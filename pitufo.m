@@ -1,6 +1,5 @@
 % Cargar imagen principal y patch de referencia
 
-
 %mainImagePath = 'Smurfs4565.jpg'; %foto original
 %mainImagePath = 'Smurfs5594.jpg'; % apareix pero poc
 mainImagePath = 'Smurfs4230.jpg'; %foto en la que no apareix el personatge
