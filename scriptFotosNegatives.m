@@ -1,7 +1,7 @@
 % Configuración
 carpeta_series = 'C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN'; % Ruta de la carpeta principal donde están las series
-carpeta_negatiu = 'C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\BobEsponja\negatiu'; % Ruta de la carpeta negatiu
-n = 11; % Número de imágenes aleatorias a seleccionar por serie
+carpeta_negatiu = 'C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\barrufets\negatiu'; % Ruta de la carpeta negatiu
+n = 13; % Número de imágenes aleatorias a seleccionar por serie
 
 % Obtener las carpetas de series
 carpetas = dir(carpeta_series);
@@ -12,7 +12,7 @@ carpetas = carpetas(~ismember({carpetas.name}, {'.', '..'})); % Eliminar '.' y '
 for i = 1:length(carpetas)
     nombre_serie = carpetas(i).name;
     
-    if (nombre_serie ~= "BobEsponja") 
+    if (nombre_serie ~= "barrufets") 
         ruta_serie = fullfile(carpeta_series, nombre_serie);
 
         % Obtener archivos de imágenes en la carpeta actual
