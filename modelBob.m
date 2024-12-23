@@ -5,7 +5,7 @@ carpeta_modelo = 'C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\BobEsponja\negatiu
 
 
 % Obtener archivos
-archivos_modelo = dir(fullfile(carpeta_modelos, '*.jpg'));
+archivos_modelo = dir(fullfile(carpeta_modelo, '*.jpg'));
 archivos_negativos = dir(fullfile(carpeta_negativas, '*.jpg'));
 
 % Inicializar matriz de características y etiquetas
@@ -22,13 +22,13 @@ for i = 1:length(archivos_modelo)
 end
 
 %Procesar imágenes negativas (clase 0)
-for i = 1:length(archivos_negativos)
-    feature_vector = extractHistogramDistanceWithSIFT(modelo_path, archivos_negativos(i).name);
-
-    % Guardar en la matriz de características
-    features = [features; feature_vector];
-    labels = [labels; 0]; % Etiqueta 0 (No Bob Esponja)
-end
+% for i = 1:length(archivos_negativos)
+%     feature_vector = extractHistogramDistanceWithSIFT(modelo_path, archivos_negativos(i).name);
+% 
+%     % Guardar en la matriz de características
+%     features = [features; feature_vector];
+%     labels = [labels; 0]; % Etiqueta 0 (No Bob Esponja)
+% end
 
 
 features

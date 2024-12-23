@@ -1,6 +1,6 @@
 %% ini 
 im_model=imread('modelo.jpg');
-%figure,imshow(im_obj),title('imatge model');
+figure,imshow(im_model),title('imatge model');
 im_obj_grey=rgb2gray(im_model);
 
 im_esc=imread('SPONGE_BOB7842.jpg');
@@ -77,15 +77,15 @@ dist_R = sqrt(sum((hist_R_model - hist_R_scene).^2));
 dist_G = sqrt(sum((hist_G_model - hist_G_scene).^2));
 dist_B = sqrt(sum((hist_B_model - hist_B_scene).^2));
 
-% fprintf('Distancia en canal R: %f\n', dist_R);
-% fprintf('Distancia en canal G: %f\n', dist_G);
-% fprintf('Distancia en canal B: %f\n', dist_B);
+fprintf('Distancia en canal R: %f\n', dist_R);
+fprintf('Distancia en canal G: %f\n', dist_G);
+fprintf('Distancia en canal B: %f\n', dist_B);
 
 % Correlación
 corrR = corr2(hist_R_model, hist_R_scene);
 corrG = corr2(hist_G_model, hist_G_scene);
 corrB = corr2(hist_B_model, hist_B_scene);
 
-% fprintf('Correlación en canal R: %f\n', corrR);
-% fprintf('Correlación en canal G: %f\n', corrG);
-% fprintf('Correlación en canal B: %f\n', corrB);
+fprintf('Correlación en canal R: %f\n', corrR);
+fprintf('Correlación en canal G: %f\n', corrG);
+fprintf('Correlación en canal B: %f\n', corrB);
