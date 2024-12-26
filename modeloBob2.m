@@ -1,14 +1,12 @@
 %% Usamos los histogramas de RGB como features
 
-% Cargar imágenes de entrenamiento
-modelo_path = 'modelo.jpg';
 % Ruta a las imágenes modelo y no modelo
 
-addpath('C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\BobEsponja\positiu');
-addpath('C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\BobEsponja\negatiu');
+addpath('TRAIN/BobEsponja/positiu');
+addpath('TRAIN/BobEsponja/negatiu');
 
-carpeta_negativas = 'C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\BobEsponja\negatiu'; % Imágenes de Bob Esponja
-carpeta_modelo = 'C:\Users\pauma\OneDrive\Escritorio\VC\TRAIN\BobEsponja\positiu'; % Imágenes sin Bob Esponja
+carpeta_negativas = 'TRAIN/BobEsponja/negatiu'; % Imágenes de Bob Esponja
+carpeta_modelo = 'TRAIN/BobEsponja/positiu'; % Imágenes sin Bob Esponja
 
 % Obtener archivos
 archivos_modelo = dir(fullfile(carpeta_modelo, '*.jpg'));
@@ -76,6 +74,3 @@ for k = k_values
     accuracy = sum(y_pred == y_test_2) / length(y_test_2);
     fprintf('k = %d, Precisión: %.2f\n', k, accuracy);
 end
-
-
-

@@ -1,7 +1,5 @@
 %% ini 
-im_model=imread('modelo.jpg');
-figure,imshow(im_model),title('imatge model');
-im_obj_grey=rgb2gray(im_model);
+
 
 im_esc=imread('SPONGE_BOB7842.jpg');
 im_esc_gray=rgb2gray(im_esc);
