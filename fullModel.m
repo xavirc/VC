@@ -71,3 +71,6 @@ y_pred = allModel.predictFcn(X_test);
 accuracy = sum(y_pred == y_test) / length(y_test);
 fprintf('Precisión en el conjunto de prueba: %.2f%%\n', accuracy * 100);
 
+%% Guardar modelo
+
+save('allModel.mat', 'allModel');
