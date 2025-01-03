@@ -53,7 +53,7 @@ function features = extractRGBHistogram(img)
         img = repmat(img, [1, 1, 3]);
     end
     
-    bins = 32;
+    bins = 64;
 
     % Calcula los histogramas RGB
     rHist = imhist(img(:, :, 1), bins);

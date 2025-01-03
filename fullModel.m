@@ -8,7 +8,7 @@ clases = {'barrufets', 'bobesponja', 'gatigos', 'gumball', 'horadeaventuras', ..
 ruta_base = 'TRAIN';
 
 % Número de bins para el histograma
-numBins = 32;
+numBins = 64;
 
 % Inicializar matrices para características y etiquetas
 features = [];
