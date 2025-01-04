@@ -48,7 +48,7 @@ fprintf(' Dimensión de cada vector de características: %d', size(features, 2))
 %% dividir datos en entrenamiento y prueba
 
 % Dividir los datos en entrenamiento y prueba
-cv = cvpartition(labels, 'HoldOut', 0.3); % 70% entrenamiento, 30% prueba
+cv = cvpartition(labels, 'HoldOut', 0.2); % 70% entrenamiento, 30% prueba
 trainIdx = training(cv); % Índices de entrenamiento
 testIdx = test(cv); % Índices de prueba
 
