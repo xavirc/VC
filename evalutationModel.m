@@ -1,10 +1,42 @@
 %% Evaluación de clasificadores encadenados
 
 % Ruta base donde se encuentran las imágenes organizadas por serie
-ruta_base = 'ruta_a_las_carpetas';
+ruta_base = 'TRAIN'; % Cambia a la ruta de tus datos
 
 % Cargar modelos entrenados
-...
+load('seriesModel.mat', 'seriesModel'); % Modelo de series
+
+% Crear el contenedor dinámico de modelos de personajes
+characterModels = containers.Map();
+load('barrufets.mat', 'barrufets');
+characterModels('barrufets') = barrufets;
+
+load('bobesponja.mat', 'bobesponja');
+characterModels('bobesponja') = bobesponja;
+
+load('gatigos.mat', 'gatigos');
+characterModels('gatigos') = gatigos;
+
+load('gumball.mat', 'Gumball');
+characterModels('gumball') = Gumball;
+
+load('horadeaventuras.mat', 'horadeaventuras');
+characterModels('horadeaventuras') = horadeaventuras;
+
+load('oliverybenji.mat', 'oliverModel');
+characterModels('oliverybenji') = oliverModel;
+
+load('padredefamilia.mat', 'petterModel');
+characterModels('padredefamilia') = petterModel;
+
+load('pokemon.mat', 'ashModel');
+characterModels('pokemon') = ashModel;
+
+load('southpark.mat', 'cartmanModel');
+characterModels('southpark') = cartmanModel;
+
+load('tomyjerry.mat', 'tomModel');
+characterModels('tomyjerry') = tomModel;
 
 bins = 64;
 
@@ -13,10 +45,9 @@ total_images = 0;
 correct_series_predictions = 0;
 correct_character_predictions = 0;
 
-% Lista de clases y sus carpetas correspondientes
+% Lista de clases (series)
 series_list = {'barrufets', 'bobesponja', 'gatigos', 'gumball', 'horadeaventuras', ...
     'oliverybenji', 'padredefamilia', 'pokemon', 'southpark', 'tomyjerry'};
-
 
 % Obtener lista de carpetas de series
 carpetas_series = dir(ruta_base);
@@ -35,16 +66,17 @@ for i = 1:length(carpetas_series)
         feature_vector = extractRGBHistogram(im_scene, bins); % Extraer características (64 bins)
         
         % --- Clasificar la serie ---
-        serie_predicha = predict(modeloSerie, feature_vector');
+        predictedClassIndex = seriesModel.predictFcn(feature_vector');
+        predictedClassName = series_list{predictedClassIndex};
         total_images = total_images + 1;
         
         % Comprobar si la serie fue correctamente clasificada
-        if strcmp(series_list{serie_predicha}, clase_real)
+        if strcmp(predictedClassName, clase_real)
             correct_series_predictions = correct_series_predictions + 1;
             
             % --- Clasificar la presencia del personaje ---
-            modelo_personaje = modelosPersonajes{serie_predicha}; % Seleccionar modelo de personaje correspondiente
-            personaje_predicho = predict(modelo_personaje, feature_vector');
+            modelo_personaje = characterModels(predictedClassName); % Seleccionar modelo de personaje correspondiente
+            personaje_predicho = modelo_personaje.predictFcn(feature_vector');
             
             % Etiqueta real: 1 (contiene al personaje)
             if personaje_predicho == 1
@@ -60,16 +92,17 @@ for i = 1:length(carpetas_series)
         feature_vector = extractRGBHistogram(im_scene, bins); 
         
         % --- Clasificar la serie ---
-        serie_predicha = predict(modeloSerie, feature_vector');
+        predictedClassIndex = seriesModel.predictFcn(feature_vector');
+        predictedClassName = series_list{predictedClassIndex};
         total_images = total_images + 1;
         
         % Comprobar si la serie fue correctamente clasificada
-        if strcmp(series_list{serie_predicha}, clase_real)
+        if strcmp(predictedClassName, clase_real)
             correct_series_predictions = correct_series_predictions + 1;
             
             % --- Clasificar la presencia del personaje ---
-            modelo_personaje = modelosPersonajes{serie_predicha}; % Seleccionar modelo de personaje correspondiente
-            personaje_predicho = predict(modelo_personaje, feature_vector');
+            modelo_personaje = characterModels(predictedClassName); % Seleccionar modelo de personaje correspondiente
+            personaje_predicho = modelo_personaje.predictFcn(feature_vector');
             
             % Etiqueta real: 0 (no contiene al personaje)
             if personaje_predicho == 0
