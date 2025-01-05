@@ -7,17 +7,40 @@ load('seriesModel.mat', 'seriesModel'); % Modelo para clasificar series
 clases = {'barrufets', 'bobesponja', 'gatigos', 'gumball', 'horadeaventuras', ...
     'oliverybenji', 'padredefamilia', 'pokemon', 'southpark', 'tomyjerry'};
 
-modelFiles = {'barrufetsModel.mat', 'bobesponjaModel.mat', 'gatigosModel.mat', ...
-    'gumballModel.mat', 'horadeaventurasModel.mat', 'oliverybenjiModel.mat', ...
-    'padredefamiliaModel.mat', 'pokemonModel.mat', 'southparkModel.mat', ...
-    'tomyjerryModel.mat'};
-
-% Cargar los modelos de personajes en un contenedor dinámico
+% Crear el contenedor dinámico
 characterModels = containers.Map();
-for idx = 1:length(clases)
-    load(modelFiles{idx}, 'characterModel'); % Cargar modelo individual
-    characterModels(clases{idx}) = characterModel; % Asociar modelo a la serie
-end
+
+% Cargar y asociar manualmente los modelos a las clases
+load('barrufets.mat', 'barrufets');
+characterModels('barrufets') = barrufets;
+
+load('bobesponja.mat', 'bobesponja');
+characterModels('bobesponja') = bobesponja;
+
+load('gatigos.mat', 'gatigos');
+characterModels('gatigos') = gatigos;
+
+load('gumball.mat', 'Gumball');
+characterModels('gumball') = Gumball;
+
+load('horadeaventuras.mat', 'horadeaventuras');
+characterModels('horadeaventuras') = horadeaventuras;
+
+load('oliverybenji.mat', 'oliverModel');
+characterModels('oliverybenji') = oliverModel;
+
+load('padredefamilia.mat', 'petterModel');
+characterModels('padredefamilia') = petterModel;
+
+load('pokemon.mat', 'ashModel');
+characterModels('pokemon') = ashModel;
+
+load('southpark.mat', 'cartmanModel');
+characterModels('southpark') = cartmanModel;
+
+load('tomyjerry.mat', 'tomModel');
+characterModels('tomyjerry') = tomModel;
+
 
 while true
     try
@@ -31,6 +54,7 @@ while true
         
         % Leer la imagen
         img = imread(imageName);
+        figure,imshow(img),title('imatge random')
         
         % Extraer características
         features = extractRGBHistogram(img, 64);
