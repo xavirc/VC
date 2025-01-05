@@ -54,7 +54,7 @@ while true
         
         % Leer la imagen
         img = imread(imageName);
-        figure,imshow(img),title('imatge random')
+        figure,imshow(img),title('imatge seleccionada')
         
         % Extraer características
         features = extractRGBHistogram(img, 64);
