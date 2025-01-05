@@ -64,13 +64,10 @@ fprintf('Conjunto de prueba: %d muestras\n', size(X_test, 1));
 %% Ver desempeño en subconjunto de test
 
 % Realizar predicciones en las imágenes de prueba
-y_pred = q8.predictFcn(X_test);
+y_pred = trainedModel.predictFcn(X_test);
 
 % Mostrar resultados
 
 accuracy = sum(y_pred == y_test) / length(y_test);
-fprintf('8 Precisión en el conjunto de prueba: %.2f%%\n', accuracy * 100);
+fprintf('Precisión en el conjunto de prueba: %.2f%%\n', accuracy * 100);
 
-%% Guardar modelo
-
-save('allModel.mat', 'allModel');
