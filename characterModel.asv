@@ -1,0 +1,60 @@
+%% Entrenar modelos para cada personaje principal de cada serie
+
+% Lista de clases (series)
+clase = 'oliverybenji';
+
+% Ruta base donde se encuentran las carpetas
+ruta_base = 'TRAIN';
+
+% Número de bins para el histograma
+numBins = 64;
+
+carpeta_si = fullfile(ruta_base, clase, 'si'); % Carpeta con imágenes del personaje
+carpeta_no = fullfile(ruta_base, clase, 'no'); % Carpeta con imágenes sin el personaje
+
+% Inicializar matrices para características y etiquetas
+features = [];
+labels = [];
+
+% Procesar imágenes de la carpeta "si" (con el personaje)
+archivos_si = dir(fullfile(carpeta_si, '*.jpg'));
+for i = 1:length(archivos_si)
+    im_scene = imread(fullfile(archivos_si(i).folder, archivos_si(i).name));
+    feature_vector = extractRGBHistogram(im_scene, numBins);
+    features = [features; feature_vector'];
+    labels = [labels; 1]; % Etiqueta 1: contiene al personaje
+end
+
+% Procesar imágenes de la carpeta "no" (sin el personaje)
+archivos_no = dir(fullfile(carpeta_no, '*.jpg'));
+for i = 1:length(archivos_no)
+    im_scene = imread(fullfile(archivos_no(i).folder, archivos_no(i).name));
+    feature_vector = extractRGBHistogram(im_scene, numBins);
+    features = [features; feature_vector'];
+    labels = [labels; 0]; % Etiqueta 0: no contiene al personaje
+end
+
+% Mostrar un resumen de los datos cargados
+fprintf('Características extraídas: %d.', size(features, 1));
+fprintf(' Dimensión de cada vector de características: %d', size(features, 2));
+
+%% Función auxiliar: Extracción de características
+function features = extractRGBHistogram(img, bins)
+    % Asegurarse de que la imagen sea RGB
+    if size(img, 3) ~= 3
+        img = repmat(img, [1, 1, 3]);
+    end
+    
+    % Calcular histogramas RGB
+    rHist = imhist(img(:, :, 1), bins);
+    gHist = imhist(img(:, :, 2), bins);
+    bHist = imhist(img(:, :, 3), bins);
+    
+    % Normalizar histogramas
+    rHist = rHist / sum(rHist);
+    gHist = gHist / sum(gHist);
+    bHist = bHist / sum(bHist);
+    
+    % Combinar histogramas en un vector
+    features = [rHist; gHist; bHist];
+end
