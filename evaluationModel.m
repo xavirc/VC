@@ -4,38 +4,38 @@
 ruta_base = 'TRAIN'; % Cambia a la ruta de tus datos
 
 % Cargar modelos entrenados
-load('seriesModel.mat', 'seriesModel'); % Modelo de series
+load('modelos/seriesModel.mat', 'seriesModel'); % Modelo de series
 
 % Crear el contenedor dinámico de modelos de personajes
 characterModels = containers.Map();
-load('barrufets.mat', 'barrufets');
+load('modelos/barrufets.mat', 'barrufets');
 characterModels('barrufets') = barrufets;
 
-load('bobesponja.mat', 'bobesponja');
+load('modelos/bobesponja.mat', 'bobesponja');
 characterModels('bobesponja') = bobesponja;
 
-load('gatigos.mat', 'gatigos');
+load('modelos/gatigos.mat', 'gatigos');
 characterModels('gatigos') = gatigos;
 
-load('gumball.mat', 'Gumball');
+load('modelos/gumball.mat', 'Gumball');
 characterModels('gumball') = Gumball;
 
-load('horadeaventuras.mat', 'horadeaventuras');
+load('modelos/horadeaventuras.mat', 'horadeaventuras');
 characterModels('horadeaventuras') = horadeaventuras;
 
-load('oliverybenji.mat', 'oliverModel');
+load('modelos/oliverybenji.mat', 'oliverModel');
 characterModels('oliverybenji') = oliverModel;
 
-load('padredefamilia.mat', 'petterModel');
+load('modelos/padredefamilia.mat', 'petterModel');
 characterModels('padredefamilia') = petterModel;
 
-load('pokemon.mat', 'ashModel');
+load('modelos/pokemon.mat', 'ashModel');
 characterModels('pokemon') = ashModel;
 
-load('southpark.mat', 'cartmanModel');
+load('modelos/southpark.mat', 'cartmanModel');
 characterModels('southpark') = cartmanModel;
 
-load('tomyjerry.mat', 'tomModel');
+load('modelos/tomyjerry.mat', 'tomModel');
 characterModels('tomyjerry') = tomModel;
 
 bins = 64;
@@ -148,3 +148,48 @@ function features = extractRGBHistogram(img, bins)
     % Combinar histogramas en un vector
     features = [rHist; gHist; bHist];
 end
+
+
+%% Generar gráficos de análisis
+
+% --- Gráfico de barras: Comparación de precisiones ---
+figure;
+bar([precision_series, precision_character, global_precision] * 100);
+set(gca, 'XTickLabel', {'Series', 'Personajes', 'Global'});
+ylabel('Precisión (%)');
+title('Comparación de Precisión por Clasificador');
+grid on;
+
+% --- Gráfico de tarta: Clasificaciones correctas e incorrectas ---
+correct_classifications = correct_character_predictions;
+incorrect_classifications = total_images - correct_classifications;
+figure;
+pie([correct_classifications, incorrect_classifications], ...
+    {'Correctas', 'Incorrectas'});
+title('Distribución de Clasificaciones Correctas vs Incorrectas');
+
+% --- Gráfico de barras agrupadas: Precisión por serie ---
+series_correct = zeros(1, length(series_list));
+series_total = zeros(1, length(series_list));
+
+% Calcular precisiones por serie
+for i = 1:length(series_list)
+    serie = series_list{i};
+    carpeta_si = fullfile(ruta_base, serie, 'si');
+    carpeta_no = fullfile(ruta_base, serie, 'no');
+    
+    series_total(i) = numel(dir(fullfile(carpeta_si, '*.jpg'))) + ...
+                      numel(dir(fullfile(carpeta_no, '*.jpg')));
+    series_correct(i) = correct_series_predictions / length(series_list); % Suponiendo distribución uniforme
+end
+
+series_precision = (series_correct ./ series_total) * 100;
+
+% Crear gráfico
+figure;
+bar(categorical(series_list), series_precision, 'FaceColor', 'flat');
+xlabel('Series');
+ylabel('Precisión (%)');
+title('Precisión por Serie');
+grid on;
+

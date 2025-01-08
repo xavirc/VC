@@ -1,7 +1,7 @@
 % Main program for image classification
 
 % Cargar modelo para identificación de series
-load('seriesModel.mat', 'seriesModel'); % Modelo para clasificar series
+load('modelos/seriesModel.mat', 'seriesModel'); % Modelo para clasificar series
 
 % Lista de clases y modelos de personajes
 clases = {'barrufets', 'bobesponja', 'gatigos', 'gumball', 'horadeaventuras', ...
@@ -11,34 +11,34 @@ clases = {'barrufets', 'bobesponja', 'gatigos', 'gumball', 'horadeaventuras', ..
 characterModels = containers.Map();
 
 % Cargar y asociar manualmente los modelos a las clases
-load('barrufets.mat', 'barrufets');
+load('modelos/barrufets.mat', 'barrufets');
 characterModels('barrufets') = barrufets;
 
-load('bobesponja.mat', 'bobesponja');
+load('modelos/bobesponja.mat', 'bobesponja');
 characterModels('bobesponja') = bobesponja;
 
-load('gatigos.mat', 'gatigos');
+load('modelos/gatigos.mat', 'gatigos');
 characterModels('gatigos') = gatigos;
 
-load('gumball.mat', 'Gumball');
+load('modelos/gumball.mat', 'Gumball');
 characterModels('gumball') = Gumball;
 
-load('horadeaventuras.mat', 'horadeaventuras');
+load('modelos/horadeaventuras.mat', 'horadeaventuras');
 characterModels('horadeaventuras') = horadeaventuras;
 
-load('oliverybenji.mat', 'oliverModel');
+load('modelos/oliverybenji.mat', 'oliverModel');
 characterModels('oliverybenji') = oliverModel;
 
-load('padredefamilia.mat', 'petterModel');
+load('modelos/padredefamilia.mat', 'petterModel');
 characterModels('padredefamilia') = petterModel;
 
-load('pokemon.mat', 'ashModel');
+load('modelos/pokemon.mat', 'ashModel');
 characterModels('pokemon') = ashModel;
 
-load('southpark.mat', 'cartmanModel');
+load('modelos/southpark.mat', 'cartmanModel');
 characterModels('southpark') = cartmanModel;
 
-load('tomyjerry.mat', 'tomModel');
+load('modelos/tomyjerry.mat', 'tomModel');
 characterModels('tomyjerry') = tomModel;
 
 
